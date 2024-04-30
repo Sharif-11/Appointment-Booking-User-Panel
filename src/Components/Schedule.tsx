@@ -1,27 +1,20 @@
 import { useEffect, useState } from "react";
-const daysOfWeek = [
-  "Sunday",
-  "Monday",
-  "Tuesday",
-  "Wednesday",
-  "Thursday",
-  "Friday",
-  "Saturday",
-];
+import axiosInstance from "../Axios/axios";
+import { daysOfWeek } from "../Utils/constants";
 const Schedule = () => {
   const [weekDay, setWeekDay] = useState(new Date().getDay());
   const [loading, setLoading] = useState(false);
-  const [slots, setSlots] = useState([]); // this slots should be dynamic; will be changed later
+  const [slots, setSlots] = useState<any[]>([]); // this slots should be dynamic; will be changed later
   useEffect(() => {
     setLoading(true);
-    // axios
-    //   .get(rootUrl + `slots/${daysOfWeek[weekDay]}`, { withCredentials: true })
-    //   .then(({ data }) => setSlots(data.data))
-    //   .catch((err) => {
-    //     console.log(err);
-    //     setSlots([]);
-    //   });
-    // setLoading(false);
+    axiosInstance
+      .get(`slots/${daysOfWeek[weekDay]}`)
+      .then(({ data }) => setSlots(data.data))
+      .catch((err) => {
+        console.log(err);
+        setSlots([]);
+      });
+    setLoading(false);
   }, [weekDay]);
   return (
     <div className="mt-[8%]">
@@ -124,9 +117,9 @@ const Schedule = () => {
                       className="rounded-md text-center font-semibold text-sm text-white flex align-middle items-center gap-2 bg-success p-2 w-auto"
                     >
                       <p className="flex">
-                        {slot.startTime}
+                        {slot?.startTime}
                         <span className="px-1">-</span>
-                        {slot.endTime}
+                        {slot?.endTime}
                       </p>
                       {/* <p onClick={() => { handleDeleteSlot(idx) }} className='cursor-pointer text-green-200 text-lg hover:text-white'><RxCrossCircled></RxCrossCircled></p> */}
                     </div>

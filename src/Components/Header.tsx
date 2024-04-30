@@ -45,7 +45,6 @@ const Header = () => {
                   <li>
                     <Link to="patient-profile" className="justify-between">
                       Profile
-                      <span className="badge">New</span>
                     </Link>
                   </li>
                   <li>

@@ -1,5 +1,6 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { DoctorContext } from "../Layout";
 import "./Carousel.css"; // Import your CSS file for styling
 
 const images = [
@@ -11,11 +12,12 @@ const images = [
 
 const Carousel = () => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const { doctor } = useContext(DoctorContext);
   useEffect(() => {
     // Automatically advance to the next image every 3 seconds
     const interval = setInterval(() => {
       setCurrentImageIndex((prevIndex) => (prevIndex + 1) % images.length);
-    }, 4000);
+    }, 2000);
 
     return () => {
       clearInterval(interval);
@@ -37,8 +39,10 @@ const Carousel = () => {
       ))}
       <div className="absolute inset-0 flex items-center justify-center">
         <div className="text-center">
-          <h1 className="font-bold py-3 text-white">Hello, I am</h1>
-          <p className="py-3 text-white"></p>
+          <h1 className="font-bold py-3 text-white">
+            Hello, I am {doctor?.name}
+          </h1>
+          <p className="py-3 text-white">{doctor?.aboutMe}</p>
           <Link
             to="/appointment"
             className="btn bg-success glass text-white font-bold focus:outline-none"
