@@ -1,11 +1,13 @@
 import { useFormik } from "formik";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import axiosInstance from "../Axios/axios";
 import signupSchema from "../formValidator/signup.yup";
 const Signup = () => {
   const navigate = useNavigate();
-  const [success, setSuccess] = useState(null);
+  const [success, setSuccess] = useState<boolean | null>(null);
   const [message, setMessage] = useState("");
+  const [loading, setLoading] = useState(false);
   const formik = useFormik({
     initialValues: {
       name: "",
@@ -17,24 +19,28 @@ const Signup = () => {
     },
     validationSchema: signupSchema,
     onSubmit: async (values) => {
-      //   const { confirmPassword, ...patient } = values;
-      //   console.log(patient);
-      //   await axios
-      //     .post(rootUrl + "user/patient", patient)
-      //     .then(({ data }) => {
-      //       console.log(data);
-      //       if (data.status) {
-      //         setSuccess(true);
-      //         setMessage(data.message);
-      //         navigate("../login");
-      //       }
-      //     })
-      //     .catch((err) => {
-      //       console.log(err.response.data);
-      //       const { message } = err.response.data;
-      //       setSuccess(false);
-      //       setMessage(message);
-      //     });
+      setLoading(true);
+      setMessage("");
+      setSuccess(null);
+      const { confirmPassword, ...patient } = values;
+      await axiosInstance
+        .post("/user/patient", patient)
+        .then(({ data }) => {
+          console.log(data);
+          if (data?.status) {
+            setSuccess(true);
+            setMessage(data.message);
+            navigate("../login");
+          }
+          setLoading(false);
+        })
+        .catch((err) => {
+          console.log(err.response.data);
+          const { message } = err.response.data;
+          setSuccess(false);
+          setMessage(message);
+          setLoading(false);
+        });
     },
   });
   return (
@@ -176,8 +182,9 @@ const Signup = () => {
                 <input
                   type="submit"
                   className="btn glass bg-success text-white"
-                  value={"Register"}
+                  value={loading ? "Loading..." : "Register"}
                 />
+
                 {success === true ? (
                   <p className="my-1 text-center text-md text-[700] text-[green]">
                     {message}

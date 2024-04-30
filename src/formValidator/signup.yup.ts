@@ -17,12 +17,6 @@ const signupSchema = Yup.object().shape({
   phoneNo: Yup.string()
     .matches(/^\d{11}$/, "Phone number must be 11 digits")
     .required("Phone number is required"),
-  designation: Yup.string()
-    .required("Designation is required")
-    .max(36, "Designation must be atmost 36 characters"),
-  aboutMe: Yup.string()
-    .optional()
-    .max(256, "Description is of at most 256 characters"),
 });
 
 export default signupSchema;
