@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 
 import { useNavigate } from "react-router-dom";
 import { HashLoader } from "react-spinners";
@@ -12,11 +12,15 @@ const Login = () => {
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-  const { setUser } = useContext(UserContext);
+  const { setUser, user } = useContext(UserContext);
   const initialValues = {
     phoneNo: "01883575965",
     password: "123456",
   };
+  console.log({ login: user });
+  useEffect(() => {
+    user && navigate("/");
+  }, [user]);
   const handleSubmit = async (loginInfo: any) => {
     setStatus(false);
     setMessage("");

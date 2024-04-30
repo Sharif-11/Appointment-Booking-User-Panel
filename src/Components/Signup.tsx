@@ -1,13 +1,18 @@
 import { useFormik } from "formik";
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axiosInstance from "../Axios/axios";
 import signupSchema from "../formValidator/signup.yup";
+import { UserContext } from "./Layout";
 const Signup = () => {
   const navigate = useNavigate();
   const [success, setSuccess] = useState<boolean | null>(null);
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
+  const { user } = useContext(UserContext);
+  useEffect(() => {
+    user && navigate("/");
+  }, [user]);
   const formik = useFormik({
     initialValues: {
       name: "",
