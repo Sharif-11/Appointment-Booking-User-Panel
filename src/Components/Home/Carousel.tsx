@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { DoctorContext } from "../Layout";
+import { UserContext } from "../Layout";
 import "./Carousel.css"; // Import your CSS file for styling
 
 const images = [
@@ -12,7 +12,7 @@ const images = [
 
 const Carousel = () => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const { doctor } = useContext(DoctorContext);
+  const { doctor } = useContext(UserContext);
   useEffect(() => {
     // Automatically advance to the next image every 3 seconds
     const interval = setInterval(() => {

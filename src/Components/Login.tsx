@@ -1,20 +1,42 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 
 import { useNavigate } from "react-router-dom";
+import { HashLoader } from "react-spinners";
+import axiosInstance from "../Axios/axios";
 import CustomField from "../Formik/CustomField";
 import CustomForm from "../Formik/CustomForm";
 import loginSchema from "../formValidator/login.yup";
-
+import { UserContext } from "./Layout";
 const Login = () => {
-  const [status, setStatus] = useState(null);
+  const [status, setStatus] = useState(false);
   const [message, setMessage] = useState("");
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-
+  const { setUser } = useContext(UserContext);
   const initialValues = {
-    phoneNo: "01865926160",
+    phoneNo: "01883575965",
     password: "123456",
   };
-  const handleSubmit = async (values) => {};
+  const handleSubmit = async (loginInfo: any) => {
+    setStatus(false);
+    setMessage("");
+    setLoading(true);
+    axiosInstance
+      .post("/user/login", loginInfo)
+      .then(({ data }) => {
+        if (data?.data) {
+          setMessage(data?.message);
+          setStatus(true);
+          setUser(data?.data);
+          navigate("/");
+        }
+        setLoading(false);
+      })
+      .catch((err: any) => {
+        setMessage(err?.message);
+        setLoading(false);
+      });
+  };
   return (
     <div className="m-7 mt-24">
       <div className="hero">
@@ -48,7 +70,7 @@ const Login = () => {
                   className="btn bg-success glass text-white"
                   type="submit"
                 >
-                  Login
+                  {loading ? <HashLoader size={25} /> : "Login"}
                 </button>
               </div>
             </CustomForm>

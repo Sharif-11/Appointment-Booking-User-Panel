@@ -1,6 +1,15 @@
+import { useContext } from "react";
 import { Link, NavLink } from "react-router-dom";
+import axiosInstance from "../Axios/axios";
+import { UserContext } from "./Layout";
 
 const Header = () => {
+  const { user, setUser } = useContext(UserContext);
+  const handleLogout = () => {
+    axiosInstance
+      .post("/user/logout")
+      .then(({ data }) => data?.status && setUser(null));
+  };
   return (
     <div className="mt-16">
       <div className="navbar shadow-xl flex justify-between fixed top-0 w-full bg-[#f0f8ff] z-10">
@@ -20,15 +29,19 @@ const Header = () => {
             <li className="mx-2">
               <NavLink to="/appointment">Appointment</NavLink>
             </li>
-            <li className="mx-2">
-              <NavLink to="/login">Login</NavLink>
-            </li>
+            {!user && (
+              <li className="mx-2">
+                <NavLink to="/login">Login</NavLink>
+              </li>
+            )}
 
-            <li className="mx-2">
-              <NavLink to="/signup">Signup</NavLink>
-            </li>
+            {!user && (
+              <li className="mx-2">
+                <NavLink to="/signup">Signup</NavLink>
+              </li>
+            )}
 
-            {
+            {user && (
               <li className="mx-2 dropdown dropdown-end">
                 <label
                   tabIndex={0}
@@ -50,12 +63,12 @@ const Header = () => {
                   <li>
                     <Link to="/user-profile-settings">Settings</Link>
                   </li>
-                  <li>
+                  <li onClick={handleLogout}>
                     <a>Logout</a>
                   </li>
                 </ul>
               </li>
-            }
+            )}
           </ul>
         </div>
       </div>
