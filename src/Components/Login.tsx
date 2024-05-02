@@ -28,8 +28,9 @@ const Login = () => {
     axiosInstance
       .post("/user/login", loginInfo)
       .then(({ data }) => {
+        console.log(data);
         if (data?.data) {
-          setMessage(data?.message);
+          setMessage(data?.data?.message);
           setStatus(true);
           setUser(data?.data);
           navigate("/");
@@ -37,7 +38,7 @@ const Login = () => {
         setLoading(false);
       })
       .catch((err: any) => {
-        setMessage(err?.message);
+        setMessage(err?.response?.data?.message);
         setLoading(false);
       });
   };
