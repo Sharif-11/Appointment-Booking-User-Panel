@@ -1,9 +1,9 @@
 import { useState } from "react";
 import axiosInstance from "../Axios/axios";
+import CustomField from "../Formik/CustomField";
+import CustomForm from "../Formik/CustomForm";
 import passwordSchema from "../formValidator/password.yup";
-import "./ChanePassword.css";
-import CustomField from "./Formik/CustomField";
-import CustomForm from "./Formik/CustomForm";
+import "./ChangePassword.css";
 const ChangePassword = () => {
   const [message, setMessage] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -44,7 +44,7 @@ const ChangePassword = () => {
         validationSchema={passwordSchema}
       >
         <CustomField
-          type="oldPassword"
+          type="password"
           name="oldPassword"
           labelText={"Old Password"}
           placeholder="Enter old password"

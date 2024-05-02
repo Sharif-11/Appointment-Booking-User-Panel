@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { Link, NavLink } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import axiosInstance from "../Axios/axios";
 import { UserContext } from "./Layout";
 
@@ -42,16 +42,18 @@ const Header = () => {
             )}
 
             {user && (
-              <li className="mx-2 dropdown dropdown-end">
-                <label
-                  tabIndex={0}
-                  className="avatar btn-ghost online btn btn-circle"
-                >
-                  <div className="w-10 rounded-full">
-                    <img src="https://placekitten.com/g/200/202" />
-                  </div>
-                </label>
-                <ul
+              <li className="mx-2 hover:bg-transparent focus:bg-transparent">
+                <NavLink to="/profile">
+                  <label
+                    tabIndex={0}
+                    className="avatar btn-ghost online btn btn-circle"
+                  >
+                    <div className="w-10 rounded-full">
+                      <img src="https://placekitten.com/g/200/202" />
+                    </div>
+                  </label>
+                </NavLink>
+                {/* <ul
                   tabIndex={0}
                   className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-white rounded-box w-52"
                 >
@@ -66,7 +68,7 @@ const Header = () => {
                   <li onClick={handleLogout}>
                     <a>Logout</a>
                   </li>
-                </ul>
+                </ul> */}
               </li>
             )}
           </ul>

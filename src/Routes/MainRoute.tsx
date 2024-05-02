@@ -1,9 +1,11 @@
 import Appointments from "../Components/Appointments";
+import ChangePassword from "../Components/ChangePassword";
 import Dashboard from "../Components/Dashboard";
 import Home from "../Components/Home/Home";
 import Layout from "../Components/Layout";
 import Login from "../Components/Login";
 import Profile from "../Components/Profile";
+import ProfileSettings from "../Components/ProfileSettings";
 import Schedule from "../Components/Schedule";
 import Signup from "../Components/Signup";
 
@@ -39,6 +41,18 @@ const mainRouter = [
           {
             path: "/profile/",
             element: <Dashboard />,
+          },
+          {
+            path: "/profile/change-password",
+            element: <ChangePassword />,
+          },
+          {
+            path: "/profile/change-password",
+            element: <ChangePassword />,
+          },
+          {
+            path: "/profile/settings",
+            element: <ProfileSettings />,
           },
         ],
       },
