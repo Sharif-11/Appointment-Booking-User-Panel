@@ -56,7 +56,7 @@ const Header = () => {
                   className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-white rounded-box w-52"
                 >
                   <li>
-                    <Link to="patient-profile" className="justify-between">
+                    <Link to="/profile" className="justify-between">
                       Profile
                     </Link>
                   </li>

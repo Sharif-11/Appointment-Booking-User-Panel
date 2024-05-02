@@ -17,6 +17,7 @@ const Layout = () => {
       .catch(() => {});
   }, []);
   useEffect(() => {
+    setLoading(true);
     axiosInstance
       .get("/user/login")
       .then(({ data }) => {
@@ -27,6 +28,7 @@ const Layout = () => {
       })
       .catch(() => setLoading(false));
   }, []);
+  console.log({ user, doctor });
   return (
     <UserContext.Provider value={{ doctor, user, setUser }}>
       {loading ? (
