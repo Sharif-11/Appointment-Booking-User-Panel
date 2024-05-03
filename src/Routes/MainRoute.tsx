@@ -4,6 +4,7 @@ import Dashboard from "../Components/Dashboard";
 import Home from "../Components/Home/Home";
 import Layout from "../Components/Layout";
 import Login from "../Components/Login";
+import PaymentCheckout from "../Components/Payment";
 import Profile from "../Components/Profile";
 import ProfileSettings from "../Components/ProfileSettings";
 import Schedule from "../Components/Schedule";
@@ -55,6 +56,10 @@ const mainRouter = [
             element: <ProfileSettings />,
           },
         ],
+      },
+      {
+        path: "/checkout/:id",
+        element: <PaymentCheckout />,
       },
     ],
   },

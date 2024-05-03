@@ -1,9 +1,9 @@
 import { useContext, useState } from "react";
 
-import doctorSchema from "../formValidator/doctorProfile.yup";
-
+import axiosInstance from "../Axios/axios";
 import CustomField from "../Formik/CustomField";
 import CustomForm from "../Formik/CustomForm";
+import patientSchema from "../formValidator/patientProfile.yup";
 import { UserContext } from "./Layout";
 import "./ProfileSettings.css";
 
@@ -12,25 +12,25 @@ const ProfileSettings = () => {
   const [message, setMessage] = useState("");
   const [status, setStatus] = useState<boolean | null>(null);
   const { user, setUser } = useContext(UserContext);
-  const { name, designation, email, aboutMe } = user;
-  const initialValues = { name, designation, email, aboutMe };
+  const { name, email, dateOfBirth } = user;
+  const initialValues = { name, email, dateOfBirth };
   const handleSubmit = (values: any) => {
     // setLoading(true);
     // setMessage("");
     // setStatus(null);
-    // axiosInstance
-    //   .put("/doctor/profile", values)
-    //   .then(({ data }) => {
-    //     setLoading(false);
-    //     setStatus(true);
-    //     setMessage(data?.message);
-    //     setUser(data?.data);
-    //   })
-    //   .catch((err: any) => {
-    //     setLoading(false);
-    //     setStatus(false);
-    //     setMessage(err?.message);
-    //   });
+    axiosInstance
+      .patch("/patient/profile", values)
+      .then(({ data }) => {
+        setLoading(false);
+        setStatus(true);
+        setMessage(data?.message);
+        setUser(data?.data);
+      })
+      .catch((err: any) => {
+        setLoading(false);
+        setStatus(false);
+        setMessage(err?.response?.data?.message || err?.message);
+      });
   };
   return (
     <div className=" flex justify-center items-center w-[100%] h-[100%]">
@@ -41,7 +41,7 @@ const ProfileSettings = () => {
             <CustomForm
               initialValues={initialValues}
               onSubmit={handleSubmit}
-              validationSchema={doctorSchema}
+              validationSchema={patientSchema}
               className="mx-8 my-8"
             >
               <CustomField

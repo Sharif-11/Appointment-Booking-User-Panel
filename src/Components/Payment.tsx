@@ -1,17 +1,15 @@
 import { useContext } from "react";
 // import { MdLocationPin } from 'react-icons/md';
-import axios from "axios";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
-import UserContext from "../Contexts/UserContext";
-import CustomField from "../components/Formik/CustomField";
-import CustomForm from "../components/Formik/CustomForm";
+import { useLocation, useParams } from "react-router-dom";
+import axiosInstance from "../Axios/axios";
+import CustomField from "../Formik/CustomField";
+import CustomForm from "../Formik/CustomForm";
 import problemDescriptionSchema from "../formValidator/problemDescription.yup";
-import { rootUrl } from "../utils/rootUrl";
+import { UserContext } from "./Layout";
 
 const PaymentCheckout = () => {
   const { id } = useParams();
   const location = useLocation();
-  const navigate = useNavigate();
   const visitingFee = location?.state?.visitingFee;
   const slotId = location?.state?.slotId;
   const { user } = useContext(UserContext);
@@ -21,16 +19,20 @@ const PaymentCheckout = () => {
   const phoneNo = user?.phoneNo;
   const userId = user?.userId;
   const initialValues = {
-    problemDescription: "Hello",
+    problemDescription: "Problem goes here",
   };
-  const handleSubmit = async ({ problemDescription }) => {
+  const handleSubmit = async ({
+    problemDescription,
+  }: {
+    problemDescription: any;
+  }) => {
     const data = {
       user: { name, email, phoneNo, userId },
       slotId,
       problemDescription,
     };
-    axios
-      .post(rootUrl + "patient/booking/" + id, data, { withCredentials: true })
+    axiosInstance
+      .post("/patient/booking/" + id, data)
       .then(({ data }) => {
         window.open(data.data.url, "_blank");
       })
@@ -71,7 +73,7 @@ const PaymentCheckout = () => {
               </div>
               <div className="grid card flex-grow mt-[5%] h-auto rounded-box">
                 <div className="booking-card">
-                  <h2 className="mb-[2%] font-[900] text-center mb-4">
+                  <h2 className="font-[900] text-center mb-4">
                     Booking Summary
                   </h2>
 
