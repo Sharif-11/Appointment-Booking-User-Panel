@@ -90,7 +90,10 @@ const Appointment = ({
         disabled={!remainingSlots || booked || loading}
         onClick={() => {
           {
-            sessionStorage.setItem("visitingFee", String(visitingFee));
+            sessionStorage.setItem(
+              "appointment",
+              JSON.stringify({ visitingFee, slotId })
+            );
             navigate("/checkout/" + _id);
           }
         }}

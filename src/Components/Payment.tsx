@@ -1,6 +1,6 @@
 import { useContext } from "react";
 // import { MdLocationPin } from 'react-icons/md';
-import { useLocation, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import axiosInstance from "../Axios/axios";
 import CustomField from "../Formik/CustomField";
 import CustomForm from "../Formik/CustomForm";
@@ -9,8 +9,10 @@ import { UserContext } from "./Layout";
 
 const PaymentCheckout = () => {
   const { id } = useParams();
-  const location = useLocation();
-  const slotId = location?.state?.slotId;
+  const appointmentData = sessionStorage.getItem("appointment");
+  const { visitingFee, slotId } = JSON.parse(
+    (appointmentData as string) || JSON.stringify({})
+  );
   const { user } = useContext(UserContext);
 
   const name = user?.name;
@@ -91,7 +93,7 @@ const PaymentCheckout = () => {
                     <span className="font-[600]">Consulting Fee</span>
                     <div className="text-left italic w-[40%] text-md font-[600]">
                       <span className="mr-[2px]">{"\u09F3"}</span>
-                      {sessionStorage.getItem("visitingFee")}
+                      {visitingFee}
                     </div>
                   </div>
                 </div>
