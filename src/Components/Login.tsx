@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { HashLoader } from "react-spinners";
 import axiosInstance from "../Axios/axios";
 import CustomField from "../Formik/CustomField";
@@ -11,13 +11,13 @@ const Login = () => {
   const [status, setStatus] = useState(false);
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
+  const location = useLocation();
   const navigate = useNavigate();
   const { setUser, user } = useContext(UserContext);
   const initialValues = {
     phoneNo: "01883575965",
     password: "123456",
   };
-  console.log({ login: user });
   useEffect(() => {
     user && navigate("/");
   }, [user]);
@@ -33,7 +33,7 @@ const Login = () => {
           setMessage(data?.data?.message);
           setStatus(true);
           setUser(data?.data);
-          navigate("/");
+          navigate(location?.state?.from || "/");
         }
         setLoading(false);
       })

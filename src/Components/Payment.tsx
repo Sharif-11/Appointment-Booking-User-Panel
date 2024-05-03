@@ -10,7 +10,6 @@ import { UserContext } from "./Layout";
 const PaymentCheckout = () => {
   const { id } = useParams();
   const location = useLocation();
-  const visitingFee = location?.state?.visitingFee;
   const slotId = location?.state?.slotId;
   const { user } = useContext(UserContext);
 
@@ -38,7 +37,6 @@ const PaymentCheckout = () => {
       })
       .catch(() => {});
   };
-  console.log({ visitingFee, user });
 
   return (
     <div className="my-[10%] mx-[5%]">
@@ -93,7 +91,7 @@ const PaymentCheckout = () => {
                     <span className="font-[600]">Consulting Fee</span>
                     <div className="text-left italic w-[40%] text-md font-[600]">
                       <span className="mr-[2px]">{"\u09F3"}</span>
-                      {visitingFee}
+                      {sessionStorage.getItem("visitingFee")}
                     </div>
                   </div>
                 </div>

@@ -30,18 +30,23 @@ const Appointment = ({
   const [remaining, setRemaining] = useState(remainingSlots);
   const navigate = useNavigate();
   useEffect(() => {
-    axiosInstance
-      .post("/patient/check-booking/" + _id, {
-        userId: user.userId,
-      })
-      .then(({ data }) => {
-        data.status && setBooked(data.data);
-        setLoading(false);
-      })
-      .catch(() => {
-        setBooked(false);
-        setLoading(false);
-      });
+    if (user) {
+      axiosInstance
+        .post("/patient/check-booking/" + _id, {
+          userId: user?.userId,
+        })
+        .then(({ data }) => {
+          data.status && setBooked(data.data);
+          setLoading(false);
+        })
+        .catch(() => {
+          setBooked(false);
+          setLoading(false);
+        });
+    } else {
+      setBooked(false);
+      setLoading(false);
+    }
   }, []);
 
   startTime = convertToAMPMFormat(startTime);
@@ -83,9 +88,12 @@ const Appointment = ({
       <button
         className="btn btn-info my-3"
         disabled={!remainingSlots || booked || loading}
-        onClick={() =>
-          navigate("/checkout/" + _id, { state: { visitingFee, slotId } })
-        }
+        onClick={() => {
+          {
+            sessionStorage.setItem("visitingFee", String(visitingFee));
+            navigate("/checkout/" + _id);
+          }
+        }}
       >
         {loading ? (
           <HashLoader size={25} />

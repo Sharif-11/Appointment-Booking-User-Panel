@@ -59,7 +59,7 @@ const Signup = () => {
           <div className="card mx-9 flex-shrink-0 w-full max-w-[650px] shadow-2xl bg-white card-body">
             <form className="w-[100%]" onSubmit={formik.handleSubmit}>
               <div className="flex justify-between w-[100%] flex-wrap">
-                <div className="form-control w-[45%]">
+                <div className="form-control w-[45%] ">
                   <label className="label">
                     <span className="label-text">Name</span>
                   </label>
@@ -70,7 +70,7 @@ const Signup = () => {
                     id="name"
                     onChange={formik.handleChange}
                     value={formik.values.name}
-                    className="bg-white input input-bordered"
+                    className="bg-white input input-bordered w-full"
                     required
                   />
                   {formik.touched.name && formik.errors.name ? (
@@ -90,7 +90,7 @@ const Signup = () => {
                     id="dateOfBirth"
                     onChange={formik.handleChange}
                     value={formik.values.dateOfBirth}
-                    className="bg-white input input-bordered"
+                    className="bg-white input input-bordered w-full"
                     required
                   />
                   {formik.touched.dateOfBirth && formik.errors.dateOfBirth ? (
@@ -110,7 +110,7 @@ const Signup = () => {
                     id="phoneNo"
                     onChange={formik.handleChange}
                     value={formik.values.phoneNo}
-                    className="bg-white input input-bordered"
+                    className="bg-white input input-bordered w-full"
                     required
                   />
                   {formik.touched.phoneNo && formik.errors.phoneNo ? (
@@ -130,7 +130,7 @@ const Signup = () => {
                     id="email"
                     onChange={formik.handleChange}
                     value={formik.values.email}
-                    className="bg-white input input-bordered"
+                    className="bg-white input input-bordered w-full"
                   />
                   {formik.touched.email && formik.errors.email ? (
                     <div className="text-xs text-[red] my-1 text-[600]">
@@ -149,7 +149,7 @@ const Signup = () => {
                     id="password"
                     onChange={formik.handleChange}
                     value={formik.values.password}
-                    className="bg-white input input-bordered "
+                    className="bg-white input input-bordered w-full "
                     required
                   />
                   {formik.touched.password && formik.errors.password ? (
@@ -169,7 +169,7 @@ const Signup = () => {
                     onChange={formik.handleChange}
                     value={formik.values.confirmPassword}
                     placeholder="Confirm password"
-                    className="bg-white input input-bordered "
+                    className="bg-white input input-bordered w-full "
                     required
                   />
                   {formik.touched.confirmPassword &&
@@ -186,7 +186,7 @@ const Signup = () => {
               <div className="form-control mt-6">
                 <input
                   type="submit"
-                  className="btn glass bg-success text-white"
+                  className="btn glass bg-success text-white w-full"
                   value={loading ? "Loading..." : "Register"}
                 />
 

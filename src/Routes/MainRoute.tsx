@@ -7,6 +7,7 @@ import Login from "../Components/Login";
 import PaymentCheckout from "../Components/Payment";
 import Profile from "../Components/Profile";
 import ProfileSettings from "../Components/ProfileSettings";
+import Protected from "../Components/Protected";
 import Schedule from "../Components/Schedule";
 import Signup from "../Components/Signup";
 
@@ -37,7 +38,11 @@ const mainRouter = [
       },
       {
         path: "/profile",
-        element: <Profile />,
+        element: (
+          <Protected>
+            <Profile />
+          </Protected>
+        ),
         children: [
           {
             path: "/profile/",
@@ -59,7 +64,11 @@ const mainRouter = [
       },
       {
         path: "/checkout/:id",
-        element: <PaymentCheckout />,
+        element: (
+          <Protected>
+            <PaymentCheckout />
+          </Protected>
+        ),
       },
     ],
   },
