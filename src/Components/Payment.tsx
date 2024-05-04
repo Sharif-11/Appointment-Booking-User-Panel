@@ -1,6 +1,6 @@
 import { useContext } from "react";
 // import { MdLocationPin } from 'react-icons/md';
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import axiosInstance from "../Axios/axios";
 import CustomField from "../Formik/CustomField";
 import CustomForm from "../Formik/CustomForm";
@@ -102,6 +102,13 @@ const PaymentCheckout = () => {
           </div>
         </div>
       </div>
+      <h6 className="text-center text-[red]  font-semibold my-5">
+        If you face any problem after clicking checkout button.Please go back to
+        <Link to="/appointment" className="ml-2">
+          appointment
+        </Link>
+        , cancel the booking and retry.
+      </h6>
     </div>
   );
 };

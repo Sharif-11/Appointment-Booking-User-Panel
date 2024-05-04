@@ -26,6 +26,7 @@ const Appointments = () => {
   return (
     <div className="m-12 py-3">
       <h1 className=" text-center my-[48px]">Upcoming Appointments</h1>
+
       <div className="w-full my-auto flex flex-wrap p-8">
         {appointments.map((appointment, idx) => (
           <Appointment key={idx} {...appointment} />
