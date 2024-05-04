@@ -24,7 +24,7 @@ const Appointment = ({
   slotId: string;
 }) => {
   const { user } = useContext(UserContext);
-  const [booked, setBooked] = useState(false);
+  const [booking, setBooking] = useState<Record<string, any> | null>(null);
   const [loading, setLoading] = useState(true);
   const [message, setMessage] = useState("");
   const [remaining, setRemaining] = useState(remainingSlots);
@@ -36,19 +36,35 @@ const Appointment = ({
           userId: user?.userId,
         })
         .then(({ data }) => {
-          data.status && setBooked(data.data);
+          // alert(JSON.stringify(data));
+          data.status && setBooking(data.data);
           setLoading(false);
         })
         .catch(() => {
-          setBooked(false);
+          setBooking(null);
           setLoading(false);
         });
     } else {
-      setBooked(false);
+      setBooking(null);
       setLoading(false);
     }
   }, []);
-
+  const cancelBooking = () => {
+    setLoading(true);
+    setMessage("");
+    axiosInstance
+      .delete(`/patient/cancel-booking/${booking?._id}`)
+      .then(({ data }) => {
+        // alert(JSON.stringify(data));
+        data?.status && setBooking(data?.data);
+        setLoading(false);
+      })
+      .catch((err: any) => {
+        setMessage(err?.response?.data[0] || err?.message);
+        setLoading(false);
+      });
+  };
+  console.log({ booking });
   startTime = convertToAMPMFormat(startTime);
   endTime = convertToAMPMFormat(endTime);
   bookingStartTime = convertToAMPMFormat(bookingStartTime);
@@ -69,7 +85,16 @@ const Appointment = ({
       <p className="text-xl text-[blue] my-1 italic">
         Remaining Slots: {remaining}
       </p>
-      {/* {booked ? (
+
+      {loading ? (
+        <button disabled className="btn btn-info my-3">
+          <HashLoader size={25} />
+        </button>
+      ) : booking?.paymentStatus === "unpaid" ? (
+        <button className="btn btn-info my-3" onClick={cancelBooking}>
+          Cancel Booking
+        </button>
+      ) : booking?.paymentStatus === "paid" ? (
         <button disabled className="btn btn-info my-3">
           Booked
         </button>
@@ -77,17 +102,22 @@ const Appointment = ({
         <button
           className="btn btn-info my-3"
           disabled={!remainingSlots}
-          onClick={() =>
-            navigate("/checkout/" + _id, { state: { visitingFee, slotId } })
-          }
+          onClick={() => {
+            {
+              sessionStorage.setItem(
+                "appointment",
+                JSON.stringify({ visitingFee, slotId })
+              );
+              navigate("/checkout/" + _id);
+            }
+          }}
         >
           Book Appointment
-          {loading && <span className="loading loading-ring loading-xs"></span>}
         </button>
-      )} */}
-      <button
+      )}
+      {/* <button
         className="btn btn-info my-3"
-        disabled={!remainingSlots || booked || loading}
+        disabled={!remainingSlots || !!booking || loading}
         onClick={() => {
           {
             sessionStorage.setItem(
@@ -100,12 +130,12 @@ const Appointment = ({
       >
         {loading ? (
           <HashLoader size={25} />
-        ) : booked ? (
+        ) : !!booking ? (
           "Booked"
         ) : (
           "Book Appointment"
         )}
-      </button>
+      </button> */}
       <p className="text-[red] text-xs text-center font-[600]">{message}</p>
     </div>
   );

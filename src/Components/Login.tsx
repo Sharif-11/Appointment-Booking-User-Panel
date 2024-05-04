@@ -38,7 +38,7 @@ const Login = () => {
         setLoading(false);
       })
       .catch((err: any) => {
-        setMessage(err?.response?.data?.message);
+        setMessage(err?.response?.data?.message || err?.message);
         setLoading(false);
       });
   };
