@@ -26,7 +26,7 @@ const Login = () => {
     setMessage("");
     setLoading(true);
     axiosInstance
-      .post("/user/login", loginInfo)
+      .post("/patient/login", loginInfo)
       .then(({ data }) => {
         console.log(data);
         if (data?.data) {
