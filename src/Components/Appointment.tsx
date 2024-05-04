@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { HashLoader } from "react-spinners";
-import axiosInstance from "../Axios/axios";
+import axiosInstance, { baseURL } from "../Axios/axios";
 import convertToAMPMFormat from "../Utils/time.utils";
 import { UserContext } from "./Layout";
 const Appointment = ({
@@ -48,6 +48,17 @@ const Appointment = ({
       setBooking(null);
       setLoading(false);
     }
+  }, []);
+  useEffect(() => {
+    const eventSource = new EventSource(`${baseURL}appointment/${_id}`);
+
+    eventSource.onmessage = (event) => {
+      setRemaining(JSON.parse(event.data)?.remainingSlots || remainingSlots);
+      setLoading(false);
+    };
+    return () => {
+      eventSource.close();
+    };
   }, []);
   const cancelBooking = () => {
     setLoading(true);

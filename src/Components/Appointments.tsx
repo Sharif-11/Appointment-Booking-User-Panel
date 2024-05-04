@@ -17,19 +17,6 @@ const Appointments = () => {
         setLoading(false);
       });
   }, []);
-  // useEffect(() => {
-  //   const eventSource = new EventSource(
-  //     "http://localhost:5000/api/v1/appointments"
-  //   );
-
-  //   eventSource.onmessage = (event) => {
-  //     setAppointments(JSON.parse(event.data));
-  //   };
-  //   eventSource.onerror = (error) => console.log(error);
-  //   return () => {
-  //     eventSource.close();
-  //   };
-  // }, []);
 
   return (
     <div className="m-12 py-3">
