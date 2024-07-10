@@ -17,6 +17,7 @@
     /* Linting */
     "strict": true,
     "noUnusedLocals": true,
+    "outDir": "./dist",
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
   },
