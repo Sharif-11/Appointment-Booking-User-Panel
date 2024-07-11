@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from "react";
 
 import { useLocation, useNavigate } from "react-router-dom";
 import { HashLoader } from "react-spinners";
-import axiosInstance from "../Axios/axios";
+import axiosInstance, { setHeader } from "../Axios/axios";
 import CustomField from "../Formik/CustomField";
 import CustomForm from "../Formik/CustomForm";
 import loginSchema from "../formValidator/login.yup";
@@ -33,6 +33,7 @@ const Login = () => {
           setMessage(data?.data?.message);
           setStatus(true);
           setUser(data?.data);
+          setHeader(data?.data?.token);
           navigate(location?.state?.from || "/");
         }
         setLoading(false);
